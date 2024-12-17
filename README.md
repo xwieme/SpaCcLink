@@ -12,5 +12,5 @@ Before you can use SpaCcLink, you first need to install the necessary libraries,
 pip install -r requirements.txt
 ```
 
-And You can refer to tutorial/melanom/melanoma.ipynb for the specific usage tutorial.
+And You can refer to tutorial/melanoma/melanoma.ipynb for the specific usage tutorial.
 
