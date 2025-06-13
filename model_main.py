@@ -231,9 +231,13 @@ def test(config=None):
     return f1
 
 
-def predict():
-    cp = configparser.ConfigParser()
-    cp.read("config.cfg")
+def predict(config=None):
+
+    if config is None:
+        cp = configparser.ConfigParser()
+        cp.read("config.cfg")
+    else:
+        cp = config
 
     num_workers = cp.getint("loader", "num_workers")
     batch_size = cp.getint("loader", "batch_size")
