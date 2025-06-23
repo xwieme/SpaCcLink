@@ -1,3 +1,5 @@
+import time
+from tqdm import tqdm
 import numpy as np
 import ot
 import pandas as pd
@@ -44,8 +46,15 @@ def getLRdistance(adata, lr_db, shuffle_num=200, max_workers=8):
 
     shuffle_list=[]
 
+    print("w_dist")
+    t1 = time.time()
     w_dist = computeForInteractions(lr_counts, lr_db, dist_matrix, max_workers = max_workers)
-    shuffle_list = [computeForInteractions(lr_counts, lr_db, dist_matrix, shuffle=True,max_workers = max_workers) for i in range(shuffle_num)]
+    t2 = time.time()
+
+    print(t2 - t1)
+
+    print("shuffle list")
+    shuffle_list = [computeForInteractions(lr_counts, lr_db, dist_matrix, shuffle=True,max_workers = max_workers) for i in tqdm(range(shuffle_num))]
     shuffle_list = np.stack(shuffle_list)
     w_shuffle = np.mean(shuffle_list, axis=0)
     d_ratio = w_dist/(w_shuffle+1e-5)
