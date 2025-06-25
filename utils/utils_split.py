@@ -18,8 +18,7 @@ def computeForLR(interaction, lr_counts, dist_matrix, reg=0.01, iternum=200):
     
     cost_matrix = dist_matrix[ligand_count>0,:][:,receptor_count>0]
 
-   
-    w_dist = ot.sinkhorn2(ligand_distribution.values, receptor_distribution.values, cost_matrix/cost_matrix.max(), reg = reg, numItermax=iternum)
+    w_dist = ot.sinkhorn2(ligand_distribution.values, receptor_distribution.values, cost_matrix/cost_matrix.max(), reg = reg, numItermax=iternum, verbose=True, log=False)
     
     return w_dist
 
@@ -51,7 +50,9 @@ def getLRdistance(adata, lr_db, shuffle_num=200, max_workers=8):
     w_dist = computeForInteractions(lr_counts, lr_db, dist_matrix, max_workers = max_workers)
     t2 = time.time()
 
+    print("#" * 50)
     print(t2 - t1)
+    print("#" * 50)
 
     print("shuffle list")
     shuffle_list = [computeForInteractions(lr_counts, lr_db, dist_matrix, shuffle=True,max_workers = max_workers) for i in tqdm(range(shuffle_num))]

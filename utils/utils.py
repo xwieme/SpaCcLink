@@ -3,7 +3,7 @@ import pandas as pd
 import networkx as nx
 import torch
 
-# from torch_sparse import SparseTensor
+from torch_sparse import SparseTensor
 from torch_geometric.data import Data
 from torch_geometric.utils import from_networkx
 
@@ -31,8 +31,8 @@ def getLinks(links, mapping):
 def getData(express_matrix, pathways, mapping):
     links = getLinks(pathways, mapping)
     x = torch.FloatTensor(express_matrix.T.to_numpy())
-    # edges = SparseTensor(row=links[0], col=links[1], sparse_sizes=(x.shape[0], x.shape[0]))
-    data = Data(x, edges=links)
+    edges = SparseTensor(row=links[0], col=links[1], sparse_sizes=(x.shape[0], x.shape[0]))
+    data = Data(x, edges=edges)
     return data
 
 
